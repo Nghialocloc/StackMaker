@@ -57,7 +57,11 @@ public class LevelManager : Singleton<LevelManager>
     public void OnFinish()
     {
         index++;
-        PlayerPrefs.SetInt("level", index);
+        // Dam bao playpref khong bi luu vuot qua so luong man choi
+        if(index < (levels.Length - 1))
+        {
+            PlayerPrefs.SetInt("level", index);
+        }
         UIManager.Ins.CloseUI<UICanvas_Gameplay>();
         UIManager.Ins.OpenUI<UICanvas_Finish>();
     }
