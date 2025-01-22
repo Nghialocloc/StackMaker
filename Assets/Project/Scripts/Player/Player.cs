@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     {
         HandleInput();
         // Neu dich den chua duoc xac dinh, nhan vat khong di chuyen
-        if(moveTarget != Vector3.zero && moveTarget != transform.position)
+        if(moveTarget != Vector3.zero && moveTarget != transform.position || (LevelManager.Ins.status == GameState.Setting && moveTarget != Vector3.zero))
         {
             ControllCharacter(moveTarget);
         }
@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
 
     public void HandleInput()
     {
-        if (isMoving || LevelManager.Ins.status == GameState.Finish)
+        if (isMoving || LevelManager.Ins.status == GameState.Finish || LevelManager.Ins.status == GameState.Setting)
         {
             return;
         }
@@ -84,9 +84,10 @@ public class Player : MonoBehaviour
         else if (Input.GetMouseButtonUp(0))
         {
             endSwipePos = Input.mousePosition;
+
             // Lay khoang cach giua hai diem va chuyen no ve Vector3 co ban
             Vector3 direcSwipe = (endSwipePos - startSwipePos).normalized;
-
+            
             if (Mathf.Abs(direcSwipe.x) > Mathf.Abs(direcSwipe.y))
             {
                 // Gan gia tri di chuyen vao, neu gia tri x > 0, di sang phai. Nguoc lai di sang trai
@@ -99,7 +100,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        // Chuyen tu moveDir sang enum
+        // Chuyen tu moveDir sang enum huong di
         if(moveDirect.x != 0 && moveDirect.y == 0)
         {
             chooseDir = moveDirect.x > 0 ? Direct.right : Direct.left;
@@ -169,6 +170,7 @@ public class Player : MonoBehaviour
 
     public void ControllCharacter(Vector3 target)
     {
+        // Di chuyen nhan vat toi dich 
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
     }
 
@@ -178,7 +180,7 @@ public class Player : MonoBehaviour
 
     public void AddBrick()
     {
-        collectedBrick.Add(brickPrefab);
+        collectedBrick.Add(brickPrefab); // Them vat the gach trong danh sach gach
 
         GameObject oj = Instantiate(brickPrefab.gameObject, transform.position, transform.rotation);    // Tao ra gach duoi chan nguoi choi
         anim.gameObject.transform.position += offset;                                                   // Dich hinh anh nhan vat len tren

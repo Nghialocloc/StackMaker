@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { MainMenu, GamePlay, Finish}
+public enum GameState { 
+    MainMenu, 
+    GamePlay,
+    Setting,
+    Finish
+}
 
 public class GameManager : Singleton<GameManager>
 {
     private static GameState gameState;
 
-    public static void ChangeState(GameState state)
+    public void ChangeState(GameState state)
     {
         gameState = state;
     }

@@ -16,6 +16,12 @@ public class UICanvas_Gameplay : UICanvas
         levelText.text = "Level " + (LevelManager.Ins.index + 1);
     }
 
+    public void Settings()
+    {
+        UIManager.Ins.CloseUI<UICanvas_Gameplay>();
+        UIManager.Ins.OpenUI<UISetting>();
+    }
+
     public void Update()
     {
         gemText.text = LevelManager.Ins.currentPlayer.collectedGem.ToString();
